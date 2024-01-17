@@ -19,42 +19,42 @@ class Channel:
         self.view_count = self.channel['items'][0]['statistics']['viewCount']
 
     def __str__(self):
-        """Метод для отображения информации об объекте класса для пользователей."""
+        """Отображает информацию об объекте класса для пользователей."""
 
         return f'{self.title} ({self.url})'
 
     def __add__(self, other):
-        """Метод, который позволяет складывать количество подписчиков на каналах."""
+        """Складывает количество подписчиков на каналах."""
 
         return int(self.subscriber_count) + int(other.subscriber_count)
 
     def __sub__(self, other):
-        """Метод для операции вычитания."""
+        """Вычитает количество подписчиков на каналах."""
 
         return int(self.subscriber_count) - int(other.subscriber_count)
 
     def __lt__(self, other):
-        """Метод для операции сравнения «меньше»."""
+        """Сравнивает со значением «меньше» количество подписчиков на каналах."""
 
         return int(self.subscriber_count) < int(other.subscriber_count)
 
     def __le__(self, other):
-        """Метод для операции сравнения «меньше или равно»."""
+        """Сравнивает со значением «меньше или равно» количество подписчиков на каналах."""
 
         return int(self.subscriber_count) <= int(other.subscriber_count)
 
     def __gt__(self, other):
-        """Метод для операции сравнения «больше»."""
+        """Сравнивает со значением «больше» количество подписчиков на каналах."""
 
         return int(self.subscriber_count) > int(other.subscriber_count)
 
     def __ge__(self, other):
-        """Метод для операции сравнения «больше или равно»."""
+        """Сравнивает со значением «больше или равно» количество подписчиков на каналах."""
 
         return int(self.subscriber_count) >= int(other.subscriber_count)
 
     def __eq__(self, other):
-        """Метод для проверки равенства."""
+        """Проверяет равенство количества подписчиков на каналах."""
 
         return int(self.subscriber_count) == int(other.subscriber_count)
 
@@ -69,7 +69,7 @@ class Channel:
         return build('youtube', 'v3', developerKey=os.getenv('API_KEY'))
 
     def to_json(self, json_file):
-        """Метод сохраняющий в файл значения атрибутов экземпляра Channel"""
+        """Сохраняет в файл значения атрибутов экземпляра Channel"""
         attribute_dict = {'id': self.id,
                           'title': self.title,
                           'description': self.description,
