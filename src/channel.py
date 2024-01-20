@@ -5,12 +5,14 @@ from googleapiclient.discovery import build
 
 class Channel:
     """Класс для ютуб-канала"""
-    api_key: str = os.getenv('API_KEY')
+
+    API_KEY: str = os.getenv('API_KEY')
 
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
-        self.id = channel_id
-        self.channel = self.get_service().channels().list(id=self.id, part='snippet,statistics').execute()
+
+        self.channel_id = channel_id
+        self.channel = self.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
         self.title = self.channel['items'][0]['snippet']['title']
         self.description = self.channel['items'][0]['snippet']['description']
         self.url = f'https://www.youtube.com/channel/{self.channel['items'][0]['id']}'
@@ -60,17 +62,20 @@ class Channel:
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-        print(json.dumps(self.get_service().channels().list(id=self.id, part='snippet,statistics')
+
+        print(json.dumps(self.get_service().channels().list(id=self.channel_id, part='snippet,statistics')
                          .execute(), indent=2))
 
     @classmethod
     def get_service(cls):
         """Класс-метод возвращающий объект для работы с YouTube API"""
+
         return build('youtube', 'v3', developerKey=os.getenv('API_KEY'))
 
     def to_json(self, json_file):
         """Сохраняет в файл значения атрибутов экземпляра Channel"""
-        attribute_dict = {'id': self.id,
+
+        attribute_dict = {'id': self.channel_id,
                           'title': self.title,
                           'description': self.description,
                           'url': self.url,
