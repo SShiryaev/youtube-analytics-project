@@ -10,18 +10,25 @@ class Video:
     def __init__(self, video_id: str) -> None:
         """Экземпляр инициализируется по id видео."""
 
-        self.video_id = video_id
-        self.video = self.get_service().videos().list(part='snippet,statistics,contentDetails,topicDetails',
-                                                      id=self.video_id).execute()
-        self.url = f'https://www.youtube.com/watch?v={self.video['items'][0]['id']}'
-        self.video_title = self.video['items'][0]['snippet']['title']
-        self.view_count = self.video['items'][0]['statistics']['viewCount']
-        self.like_count = self.video['items'][0]['statistics']['likeCount']
+        try:
+            self.video_id = video_id
+            self.video = self.get_service().videos().list(part='snippet,statistics,contentDetails,topicDetails',
+                                                          id=self.video_id).execute()
+            self.url = f'https://www.youtube.com/watch?v={self.video['items'][0]['id']}'
+            self.title = self.video['items'][0]['snippet']['title']
+            self.view_count = self.video['items'][0]['statistics']['viewCount']
+            self.like_count = self.video['items'][0]['statistics']['likeCount']
+        except Exception:
+            self.video_id = video_id
+            self.url = None
+            self.title = None
+            self.view_count = None
+            self.like_count = None
 
     def __str__(self):
         """Отображает название видео."""
 
-        return f'{self.video_title}'
+        return f'{self.title}'
 
     @classmethod
     def get_service(cls):
